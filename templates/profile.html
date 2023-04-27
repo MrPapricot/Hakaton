@@ -6,22 +6,16 @@
     {% if is_mentor %}
         <h2>Наставник</h2>
         <p>
-            <form action="task.html">
-                <button type="submit" name="popup-button"> Создать практическую задачу </button>
-            </form>
+            <a type="submit" name="popup-button" href="/task/"> Создать практическую задачу </a>
         </p>
         <p>
-            <form action="task.html">
-                <button type="submit" name="popup-button"> Создать теоритический материал </button>
-            </form>
+            <a type="submit" name="popup-button" href="/task/"> Создать теоритический материал </a>
         </p>
     {% endif %}
     {% if not is_mentor %}
     <h2>Ученик</h2>
         <p>
-            <form action="tasks.html">
-                <button type="submit" name="popup-button"> Список заданий и материалов </button>
-            </form>
+            <a type="submit" name="popup-button" href="/tasks/"> Список заданий и материалов </a>
         </p>
     {% endif %}
 

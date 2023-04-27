@@ -31,7 +31,7 @@ def load_user(student_id):
 
 
 def main():
-    app.run(debug=True)
+    app.run()
 
 
 def add_task(*, task, students: list):
@@ -74,9 +74,10 @@ def tasks():
 
 
 @app.route('/')
-@login_required
 def index():
-    return redirect('/profile/')
+    if current_user.is_authenticated:
+        return redirect('/profile/')
+    return redirect('/login/')
 
 
 @app.route('/profile/')
@@ -142,8 +143,22 @@ def do_task(id):
     task = sess.query(Tasks).filter(Tasks.id == id).first()
     if task.test:
         with open(task.path, 'r') as file:
-            form = DoTheoryForm(json.load(file))
-        return render_template('do_test.html', form=form, task=task)
+            form = DoTestForm(json.load(file))
+            if request.method == 'GET':
+                return render_template('do_test.html', form=form, task=task)
+            if request.method == 'POST':
+                table = results.table(str(current_user.id))
+                count = 0
+                all_data = []
+                for i in form.tasks:
+                    answers = []
+                    for j in i['variants']:
+                        if j.data:
+                            answers.append(j.label)
+                    if set(answers) == set(i['right']):
+                        count += 1
+                    all_data.append({'answers': answers, 'right': i['right']})
+                table.insert({'id': task.id, 'result': count, 'max': len(form.tasks), 'all_data': all_data})
     else:
         form = DoTheoryForm()
         with open(task.path, 'r') as file:

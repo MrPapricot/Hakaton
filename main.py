@@ -31,7 +31,7 @@ def load_user(student_id):
 
 
 def main():
-    app.run()
+    app.run(debug=True)
 
 
 def add_task(*, task, students: list):
@@ -67,10 +67,16 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
+@app.route('/tasks/')
+@login_required
+def tasks():
+    return render_template('tasks.html', task_list=get_tasks(current_user))
+
+
 @app.route('/add_test/', methods=['GET', 'POST'])
 @login_required
 def add_test():
-    if current_user.mentor:
+    if current_user.is_mentor:
         form = TestForm()
         if form.validate_on_submit():
             sess = db_session.create_session()
@@ -93,8 +99,9 @@ def add_test():
 
 
 @app.route('/add_theory/', methods=['GET', 'POST'])
+@login_required
 def add_theory():
-    if current_user.mentor:
+    if current_user.is_mentor:
         form = TestForm()
         if form.validate_on_submit():
             sess = db_session.create_session()
@@ -117,6 +124,7 @@ def add_theory():
 
 
 @app.route('/do_task/<int:id>/', methods=['GET', 'POST'])
+@login_required
 def do_task(id):
     sess = db_session.create_session()
     task = sess.query(Tasks).filter(Tasks.id == id).first()

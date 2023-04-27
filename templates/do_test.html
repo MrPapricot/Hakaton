@@ -5,10 +5,8 @@
     <p> {{ task.content }} </p>
     <form action="" method="post">
         {% for i in form.tasks %}
-        {{ i['question'] }}<br>
-        {% for j in i['variants'] %}
-        <p>{{ j() }} {{ j.label }}</p>
-        {% endfor %}
+        {{ i.task.lable }}<br>
+        {{ i.task() }}
         {% endfor %}
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     </form>

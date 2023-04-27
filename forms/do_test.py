@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, TextAreaField
-from wtforms import BooleanField, SubmitField
+from wtforms import BooleanField, SubmitField, RadioField
 from wtforms.validators import DataRequired
 
 
@@ -13,7 +13,7 @@ class DoTestForm(FlaskForm):
         super().__init__()
         self.tasks.clear()
         for i in tasks:
-            task = {'question': i['question'], 'variants': [BooleanField(str(j), nullable=True, default=False) for j in i['variants']]}
+            task = RadioField(i['question'], choices=[str(j) for j in i['variants']])
             self.tasks.append(task)
 
 

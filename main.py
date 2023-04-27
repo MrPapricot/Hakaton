@@ -3,16 +3,19 @@ from data import db_session
 from flask import Flask
 from data import db_session
 from data.task import Tasks
-from data.mentor import Mentor
 from data.student import Student
 from data.relationships import Relationship
 from flask_login import LoginManager, login_user, login_required, current_user
 from forms.register import RegisterForm
 from forms.login import LoginForm
+from forms.test import TestForm
+from forms.theory import TheoryForm
+from tinydb import TinyDB, Query
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("db/database.db")
+results = TinyDB('results.json')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -60,12 +63,61 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route('/make_task')
+@app.route('/add_test/')
 @login_required
-def make_task():
+def add_test():
     if current_user.mentor:
-        pass
+        form = TestForm()
+        if form.validate_on_submit():
+            sess = db_session.create_session()
+            task = Tasks()
+            task.test = True
+            task.title = form.title
+            task.deadline = form.deadline
+            file = form.file.data
+            file.save('tasks/' + file.filename)
+            task.path = 'tasks/' + file.filename
+            if form.students.data == '@all':
+                students = sess.query(Student).all()
+            else:
+                students = [sess.query(Student).filter(Student.id == i).first() for i in form.students.data.split(', ')]
+            sess.add(task)
+            sess.commit()
+            add_task(task=task, students=students)
+            return redirect('/')
+        return render_template('task.html', form=form)
 
+
+@app.route('/add_theory/')
+def add_theory():
+    if current_user.mentor:
+        form = TestForm()
+        if form.validate_on_submit():
+            sess = db_session.create_session()
+            task = Tasks()
+            task.test = False
+            task.title = form.title
+            task.deadline = form.deadline
+            file = form.file.data
+            file.save('tasks/' + file.filename)
+            task.path = 'tasks/' + file.filename
+            if form.students.data == '@all':
+                students = sess.query(Student).all()
+            else:
+                students = [sess.query(Student).filter(Student.id == i).first() for i in form.students.data.split(', ')]
+            sess.add(task)
+            sess.commit()
+            add_task(task=task, students=students)
+            return redirect('/')
+        return render_template('task.html', form=form)
+
+
+@app.route('/do_task/<int:id>/', methods=['GET', 'POST'])
+def do_task(id):
+    sess = db_session.create_session()
+    task = sess.query(Tasks).filter(Tasks.id == id).first()
+    if task.test:
+        pass
 
 
 

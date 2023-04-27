@@ -15,6 +15,7 @@ class Student(SqlAlchemyBase, UserMixin):
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    is_mentor = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)

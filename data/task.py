@@ -13,3 +13,4 @@ class Tasks(SqlAlchemyBase):
     path = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     deadline = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     test = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True, default=False)
+    autorate = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True, default=True)

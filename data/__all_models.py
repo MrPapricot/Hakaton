@@ -1,1 +1,1 @@
-from . import mentor, student, task, relationships
+from . import student, task, relationships

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавить тест</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }} <br>
+        {{ form.title(class="form-control") }} <br>
+        {% for error in form.title.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.content.label }} <br>
+        {{ form.content(class="form-control") }} <br>
+        {% for error in form.content.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.students.label }} <br>
+        {{ form.students(class="form-control") }} <br>
+        {% for error in form.students.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.file.label }}<br>
+        {{ form.file }}<br>
+        {% for error in form.file.errors %}
+    <p content="alert alert-danger" role="alert">
+        <b style="color:red;">{{ error }}</b>
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.deadline.label }}<br>
+        {{ form.deadline(class="form-control") }}<br>
+        {% for error in form.deadline.errors %}
+    <p content="alert alert-danger" role="alert">
+        <b style="color:red;">{{ error }}</b>
+    </p>
+    {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+
+
+</form>
+{% endblock %}

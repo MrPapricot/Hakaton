@@ -10,4 +10,5 @@ class TestForm(FlaskForm):
     content = TextAreaField("Дополнительная информация")
     students = StringField('ID учеников через запятую (1, 2, 3, ...)', validators=[DataRequired()])
     file = FileField('Задание', validators=[FileAllowed(['json'], 'Только файлы json')])
+    deadline = StringField('Крайний срок сдачи')
     submit = SubmitField('Применить')

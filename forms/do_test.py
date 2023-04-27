@@ -1,19 +1,19 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, TextAreaField
-from wtforms import BooleanField, SubmitField, RadioField, FieldList
+from wtforms import BooleanField, SubmitField, RadioField
 from wtforms.validators import DataRequired
 
 
 class DoTestForm(FlaskForm):
     submit = SubmitField('Завершить')
-    list = FieldList(RadioField('Вопрос', choices=['1', '2', '3']))
+    tasks = []
 
     def __init__(self, tasks):
-        super().__init__()
-        self.list = FieldList(RadioField('Вопрос', choices=['1', '2', '3']))
+        self.tasks.clear()
         for i in tasks:
-            task = RadioField(i['question'], choices=[str(j) for j in i['variants']])
-            self.list.append_entry(task)
+            task =[i['question'], [str(j) for j in i['variants']]]
+            self.tasks.append(task)
+        super().__init__()
 
 

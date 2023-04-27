@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ task.title }}</h1>
-    <p> {{ task.content }} </p>
-    <form action="" method="post">
-        {% for i in range(count) %}
-        {{ exec('radio' + str(i)).label }}<br>
-        {{ exec('radio' + str(i)) }}
+<h1>{{ task.title }}</h1>
+<p> {{ task.content }} </p>
+<form action="" method="post">
+    {% for i in form.tasks %}
+    <fieldset>
+        <legend>{{ i[0] }}</legend>
+        {% for j in i[1] %}
+        <div>
+            <input type="radio" id="{{ j }}" name="{{ i[0] }}" checked>
+            <label for="{{ j }}">{{ j }}</label>
+        </div>
         {% endfor %}
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-    </form>
+    </fieldset>
+    {% endfor %}
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+</form>
 {% endblock %}

@@ -16,6 +16,7 @@ from tinydb import TinyDB, Query
 from forms.do_theory import DoTheoryForm
 from forms.do_test import DoTestForm
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("db/database.db")
@@ -143,21 +144,9 @@ def do_task(id):
     task = sess.query(Tasks).filter(Tasks.id == id).first()
     if task.test:
         with open(task.path, 'r') as file:
-            text = f'''
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import StringField, TextAreaField
-from wtforms import BooleanField, SubmitField, RadioField, FieldList
-from wtforms.validators import DataRequired
-class DoTestForm(FlaskFrom):\n'''
-            count = 0
-            for i in json.load(file):
-                text += f'\tradio{count} = RadioField("{i["question"]}", choices={i["variants"]}])\n'
-                count += 1
-            exec(text)
-            form = DoTestForm()
+            form = DoTestForm(json.load(file))
             if request.method == 'GET':
-                return render_template('do_test.html', form=form, task=task, count=count)
+                return render_template('do_test.html', form=form, task=task)
             if request.method == 'POST':
                 table = results.table(str(current_user.id))
                 count = 0

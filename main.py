@@ -73,6 +73,18 @@ def tasks():
     return render_template('tasks.html', task_list=get_tasks(current_user))
 
 
+@app.route('/')
+@login_required
+def index():
+    return redirect('/profile/')
+
+
+@app.route('/profile/')
+@login_required
+def profile():
+    return render_template('profile.html', is_mentor=current_user.is_mentor)
+
+
 @app.route('/add_test/', methods=['GET', 'POST'])
 @login_required
 def add_test():

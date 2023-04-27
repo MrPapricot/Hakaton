@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Профиль</h1>
+<form action="" method="post" enctype="multipart/form-data" class="file_form">
+    {% if is_mentor %}
+        <h2>Наставник</h2>
+        <p>
+            <form action="task.html">
+                <button type="submit" name="popup-button"> Создать практическую задачу </button>
+            </form>
+        </p>
+        <p>
+            <form action="task.html">
+                <button type="submit" name="popup-button"> Создать теоритический материал </button>
+            </form>
+        </p>
+    {% endif %}
+    {% if not is_mentor %}
+    <h2>Ученик</h2>
+        <p>
+            <form action="tasks.html">
+                <button type="submit" name="popup-button"> Список заданий и материалов </button>
+            </form>
+        </p>
+    {% endif %}
+
+
+</form>
+{% endblock %}

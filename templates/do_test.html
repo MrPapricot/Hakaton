@@ -7,7 +7,7 @@
         {% for i in form.tasks %}
         {{ i['question'] }}<br>
         {% for j in i['variants'] %}
-        <p>{{ j.__call__() }} {{ j.label }}</p>
+        <p>{{ j() }} {{ j.label }}</p>
         {% endfor %}
         {% endfor %}
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>

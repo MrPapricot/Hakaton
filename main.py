@@ -15,11 +15,6 @@ from forms.theory import TheoryForm
 from tinydb import TinyDB, Query
 from forms.do_theory import DoTheoryForm
 from forms.do_test import DoTestForm
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import StringField, TextAreaField
-from wtforms import BooleanField, SubmitField, RadioField, FieldList
-from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -148,7 +143,13 @@ def do_task(id):
     task = sess.query(Tasks).filter(Tasks.id == id).first()
     if task.test:
         with open(task.path, 'r') as file:
-            text = f'''class DoTestForm(FlaskFrom):\n'''
+            text = f'''
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms import StringField, TextAreaField
+from wtforms import BooleanField, SubmitField, RadioField, FieldList
+from wtforms.validators import DataRequired
+class DoTestForm(FlaskFrom):\n'''
             count = 0
             for i in json.load(file):
                 text += f'\tradio{count} = RadioField("{i["question"]}", choices={i["variants"]}])\n'

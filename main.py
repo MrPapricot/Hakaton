@@ -76,8 +76,8 @@ def add_test():
             sess = db_session.create_session()
             task = Tasks()
             task.test = True
-            task.title = form.title
-            task.deadline = form.deadline
+            task.title = form.title.data
+            task.deadline = form.deadline.data
             file = form.file.data
             file.save('tasks/' + file.filename)
             task.path = 'tasks/' + file.filename

@@ -115,7 +115,7 @@ def add_test():
 @login_required
 def add_theory():
     if current_user.is_mentor:
-        form = TestForm()
+        form = TheoryForm()
         if form.validate_on_submit():
             sess = db_session.create_session()
             task = Tasks()

@@ -13,7 +13,7 @@ class DoTestForm(FlaskForm):
         super().__init__()
         self.tasks.clear()
         for i in tasks:
-            task = {'question': i['question'], 'variants': [BooleanField(str(j)) for j in i['variants']]}
+            task = {'question': i['question'], 'variants': [BooleanField(str(j), nullable=True, default=False) for j in i['variants']]}
             self.tasks.append(task)
 
 

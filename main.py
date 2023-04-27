@@ -53,6 +53,7 @@ def get_tasks(student):
             tasks.append(add)
     return tasks
 
+
 def get_theories(student):
     sess = db_session.create_session()
     tasks = []

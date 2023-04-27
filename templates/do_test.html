@@ -4,7 +4,7 @@
     <h1>{{ task.title }}</h1>
     <p> {{ task.content }} </p>
     <form action="" method="post">
-        {% for i in form.tasks %}
+        {% for i in form.list %}
         {{ i.task.lable }}<br>
         {{ i.task() }}
         {% endfor %}

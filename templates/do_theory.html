@@ -4,7 +4,7 @@
     <h1>{{ task.title }}</h1>
     <p> {{ task.content }} </p>
     <form action="" method="post">
-        {{ text }}
+        {% include path %}
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     </form>
 {% endblock %}

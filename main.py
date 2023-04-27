@@ -16,7 +16,6 @@ from tinydb import TinyDB, Query
 from forms.do_theory import DoTheoryForm
 from forms.do_test import DoTestForm
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("db/database.db")
@@ -161,9 +160,7 @@ def do_task(id):
                 return redirect('/')
     else:
         form = DoTheoryForm()
-        with open(task.path, 'r') as file:
-            text = file.read()
-        return render_template('do_theory.html', text=text, task=task, form=form)
+        return render_template('do_theory.html', task=task, form=form, path=task.path)
 
 
 if __name__ == '__main__':

@@ -135,7 +135,7 @@ def add_theory():
             task.deadline = form.deadline.data
             file = form.file.data
             file.save('tasks/' + file.filename)
-            task.path = 'tasks/' + file.filename
+            task.path = file.filename
             if form.students.data == '@all':
                 students = sess.query(Student).all()
             else:
@@ -171,6 +171,7 @@ def do_task(id):
                 return redirect('/')
     else:
         form = DoTheoryForm()
+        print(task.path)
         return render_template('do_theory.html', task=task, form=form, path=task.path)
 
 

@@ -4,7 +4,7 @@
     <h1>{{ task.title }}</h1>
     <p> {{ task.content }} </p>
     <form action="" method="post">
-        {% include path %}
+        {% include url_for('tasks',filename=path).split('/')[1]+'/'+path %}
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     </form>
 {% endblock %}

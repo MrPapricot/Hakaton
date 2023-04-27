@@ -67,7 +67,7 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route('/add_test/')
+@app.route('/add_test/', methods=['GET', 'POST'])
 @login_required
 def add_test():
     if current_user.mentor:
@@ -92,7 +92,7 @@ def add_test():
         return render_template('task.html', form=form)
 
 
-@app.route('/add_theory/')
+@app.route('/add_theory/', methods=['GET', 'POST'])
 def add_theory():
     if current_user.mentor:
         form = TestForm()

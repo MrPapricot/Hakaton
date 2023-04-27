@@ -151,15 +151,14 @@ def do_task(id):
                 table = results.table(str(current_user.id))
                 count = 0
                 all_data = []
+                a = request.form
                 for i in form.tasks:
-                    answers = []
-                    for j in i['variants']:
-                        if j.data:
-                            answers.append(j.label)
-                    if set(answers) == set(i['right']):
+                    print(a[i[0]])
+                    if a[i[0]] == i[2]:
                         count += 1
-                    all_data.append({'answers': answers, 'right': i['right']})
+                    all_data.append({'answers': a[i[0]], 'right': i[2], 'all': i[1]})
                 table.insert({'id': task.id, 'result': count, 'max': len(form.tasks), 'all_data': all_data})
+                return redirect('/')
     else:
         form = DoTheoryForm()
         with open(task.path, 'r') as file:

@@ -3,13 +3,13 @@
 {% block content %}
 <h1>{{ task.title }}</h1>
 <p> {{ task.content }} </p>
-<form action="" method="post">
+<form action="" method="post" onsubmit="">
     {% for i in form.tasks %}
     <fieldset>
         <legend>{{ i[0] }}</legend>
         {% for j in i[1] %}
         <div>
-            <input type="radio" id="{{ j }}" name="{{ i[0] }}" checked>
+            <input type="radio" id="{{ j }}" name="{{ i[0] }}" value = "{{ j }}" checked>
             <label for="{{ j }}">{{ j }}</label>
         </div>
         {% endfor %}

@@ -12,7 +12,7 @@ class DoTestForm(FlaskForm):
     def __init__(self, tasks):
         self.tasks.clear()
         for i in tasks:
-            task =[i['question'], [str(j) for j in i['variants']]]
+            task =[i['question'], [str(j) for j in i['variants']], i['answers']]
             self.tasks.append(task)
         super().__init__()
 

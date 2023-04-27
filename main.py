@@ -48,7 +48,18 @@ def get_tasks(student):
     sess = db_session.create_session()
     tasks = []
     for i in sess.query(Relationship).filter(Relationship.student_id == student.id).all():
-        tasks.append(sess.query(Tasks).filter(Tasks.id == i.task_id).first())
+        add = sess.query(Tasks).filter(Tasks.id == i.task_id, Tasks.test == 1).first()
+        if add:
+            tasks.append(add)
+    return tasks
+
+def get_theories(student):
+    sess = db_session.create_session()
+    tasks = []
+    for i in sess.query(Relationship).filter(Relationship.student_id == student.id).all():
+        add = sess.query(Tasks).filter(Tasks.id == i.task_id, Tasks.test == 0).first()
+        if add:
+            tasks.append(add)
     return tasks
 
 
@@ -70,7 +81,7 @@ def login():
 @app.route('/tasks/')
 @login_required
 def tasks():
-    return render_template('tasks.html', task_list=get_tasks(current_user))
+    return render_template('tasks.html', task_list=get_tasks(current_user), theory_list=get_theories(current_user))
 
 
 @app.route('/')
@@ -120,8 +131,8 @@ def add_theory():
             sess = db_session.create_session()
             task = Tasks()
             task.test = False
-            task.title = form.title
-            task.deadline = form.deadline
+            task.title = form.title.data
+            task.deadline = form.deadline.data
             file = form.file.data
             file.save('tasks/' + file.filename)
             task.path = 'tasks/' + file.filename

@@ -12,7 +12,7 @@
                 <p>
                     {{ task.content }}
                 </p>
-                <a type="submit" name="popup-button" href={{task.path}}> Ознакомиться </a>
+                <a type="submit" name="popup-button" href={{"/do_task/{}/".format(task.id)}}> Ознакомиться </a>
                 <br>
             </li>
         {% endfor %}
@@ -28,11 +28,14 @@
                 <p>
                     {{ task.content }}
                 </p>
-                <a type="submit" name="popup-button" href={{task.path}}> Приступить </a>
+                <a type="submit" name="popup-button" href={{"/do_task/{}/".format(task.id)}}> Приступить </a>
                 <br>
             </li>
         {% endfor %}
         </ol>
+    </p>
+    <p>
+        <a type="submit" name="popup-button" href="/profile/"> Назад в профиль </a>
     </p>
 
 </form>

@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired
 
 class DoTestForm(FlaskForm):
     submit = SubmitField('Завершить')
+    list = FieldList(RadioField('Вопрос', choices=['1', '2', '3']))
 
     def __init__(self, tasks):
         super().__init__()

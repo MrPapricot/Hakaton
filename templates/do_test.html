@@ -4,9 +4,9 @@
     <h1>{{ task.title }}</h1>
     <p> {{ task.content }} </p>
     <form action="" method="post">
-        {% for i in form.list %}
-        {{ i.task.lable }}<br>
-        {{ i.task() }}
+        {% for i in range(count) %}
+        {{ exec('radio' + str(i)).label }}<br>
+        {{ exec('radio' + str(i)) }}
         {% endfor %}
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     </form>

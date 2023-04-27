@@ -134,7 +134,7 @@ def add_theory():
             task.title = form.title.data
             task.deadline = form.deadline.data
             file = form.file.data
-            file.save('tasks/' + file.filename)
+            file.save('templates/static/' + file.filename)
             task.path = file.filename
             if form.students.data == '@all':
                 students = sess.query(Student).all()

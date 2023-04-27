@@ -64,6 +64,14 @@ def get_theories(student):
     return tasks
 
 
+def get_rating(student):
+    table = results.table(str(student.id))
+    summary = 0
+    for elem in table:
+        summary += elem['result']
+    return summary
+
+
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -95,7 +103,7 @@ def index():
 @app.route('/profile/')
 @login_required
 def profile():
-    return render_template('profile.html', is_mentor=current_user.is_mentor)
+    return render_template('profile.html', is_mentor=current_user.is_mentor, rating=get_rating(current_user))
 
 
 @app.route('/add_test/', methods=['GET', 'POST'])
@@ -168,6 +176,8 @@ def do_task(id):
                     if a[i[0]] == i[2]:
                         count += 1
                     all_data.append({'answers': a[i[0]], 'right': i[2], 'all': i[1]})
+                if table.search(Query().id == task.id):
+                    count = 0
                 table.insert({'id': task.id, 'result': count, 'max': len(form.tasks), 'all_data': all_data})
                 return redirect('/')
     else:

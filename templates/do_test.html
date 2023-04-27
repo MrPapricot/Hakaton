@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ task.title }}</h1>
+    <p> {{ task.content }} </p>
+    <form action="" method="post">
+        {% for i in form.tasks %}
+        {{ i['question'] }}
+        {% for j in i['variants'] %}
+        <p>{{ j() }} {{ j.label }}</p>
+        {% endfor %}
+        {% endfor %}
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}

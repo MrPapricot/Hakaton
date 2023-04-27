@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ task.title }}</h1>
+    <p> {{ task.content }} </p>
+    <form action="" method="post">
+        {{ text }}
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}

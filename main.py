@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, redirect, render_template, request
 from data import db_session
 from flask import Flask
@@ -11,6 +13,8 @@ from forms.login import LoginForm
 from forms.test import TestForm
 from forms.theory import TheoryForm
 from tinydb import TinyDB, Query
+from forms.do_theory import DoTheoryForm
+from forms.do_test import DoTestForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -117,8 +121,14 @@ def do_task(id):
     sess = db_session.create_session()
     task = sess.query(Tasks).filter(Tasks.id == id).first()
     if task.test:
-        pass
-
+        with open(task.path, 'r') as file:
+            form = DoTheoryForm(json.load(file))
+        return render_template('do_test.html', form=form, task=task)
+    else:
+        form = DoTheoryForm()
+        with open(task.path, 'r') as file:
+            text = file.read()
+        return render_template('do_theory.html', text=text, task=task, form=form)
 
 
 if __name__ == '__main__':

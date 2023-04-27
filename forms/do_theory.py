@@ -5,7 +5,5 @@ from wtforms import BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
 
-class TheoryForm(FlaskForm):
-    title = StringField('Заголовок', validators=[DataRequired()])
-    content = TextAreaField("Дополнительная информация")
-    submit = SubmitField('Применить')
+class DoTheoryForm(FlaskForm):
+    submit = SubmitField('Завершить')

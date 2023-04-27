@@ -30,7 +30,7 @@ def load_user(student_id):
     return db_sess.query(Student).get(student_id)
 
 
-def main():
+def main() -> object:
     app.run()
 
 
@@ -186,5 +186,4 @@ def do_task(id):
         return render_template('do_theory.html', task=task, form=form, path=task.path)
 
 
-if __name__ == '__main__':
-    main()
+main()
